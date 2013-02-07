@@ -592,6 +592,7 @@ gbm_dri_bo_create(struct gbm_device *gbm,
    dri_format = gbm_to_dri_format(format);
    /* Round-trip gbm_format->dri_format->gbm_format to canonicalise
       GBM_BO_FORMAT_* into GBM_FORMAT_* */
+
    bo->base.base.format = gbm_dri_to_gbm_format(dri_format);
 
    if (usage & GBM_BO_USE_SCANOUT)
