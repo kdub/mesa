@@ -235,6 +235,14 @@ dri2_destroy_mir_surface(_EGLDriver *drv, _EGLDisplay *disp, _EGLSurface *surf)
    return EGL_TRUE;
 }
 
+static void
+surface_callback(MirSurface *surface, void *ctx)
+{
+   struct dri2_egl_surface *dri2_surf = dri2_egl_surface(ctx);
+
+}
+
+>>>>>>> Squash all the bzr commits for Mir into one ungovernable mess, because we no longer invest in our tooling
 /**
  * Called via eglSwapBuffers(), drv->API.SwapBuffers().
  */
