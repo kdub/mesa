@@ -140,11 +140,14 @@ mir_populate_colour_buffers(struct dri2_egl_surface *surf)
    surf->mir_disp->surface_get_current_buffer(surf->mir_disp,
                                               (EGLNativeWindowType)surf->mir_surf,
                                               &buffer_package);
-   /* We expect [name, pitch] in our buffer */
-   assert(buffer_package.data_items == 1);
+   /* We expect no data items, and (for the moment) one PRIME fd */
+   assert(buffer_package.data_items == 0);
+   assert(buffer_package.fd_items == 1);
 
    surf->dri_buffers[__DRI_BUFFER_BACK_LEFT]->name = 0;
    surf->dri_buffers[__DRI_BUFFER_BACK_LEFT]->fd = buffer_package.fd[0];
+   /* Man, I hope that Intel's just being funky when they multiply pitch by
+      cpp */
    surf->dri_buffers[__DRI_BUFFER_BACK_LEFT]->pitch = buffer_package.stride;
 }
 
@@ -253,6 +256,8 @@ dri2_swap_buffers(_EGLDriver *drv, _EGLDisplay *disp, _EGLSurface *draw)
    struct dri2_egl_driver *dri2_drv = dri2_egl_driver(drv);
 
    dri2_surf->mir_disp->surface_advance_buffer(dri2_surf->mir_disp, (EGLNativeWindowType)dri2_surf->mir_surf);
+
+   (*dri2_dpy->flush->flush)(dri2_surf->dri_drawable);
 
    (*dri2_dpy->flush->flush)(dri2_surf->dri_drawable);
 
