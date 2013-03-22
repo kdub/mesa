@@ -242,7 +242,6 @@ surface_callback(MirSurface *surface, void *ctx)
 
 }
 
->>>>>>> Squash all the bzr commits for Mir into one ungovernable mess, because we no longer invest in our tooling
 /**
  * Called via eglSwapBuffers(), drv->API.SwapBuffers().
  */
