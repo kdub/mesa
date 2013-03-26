@@ -238,13 +238,6 @@ dri2_destroy_mir_surface(_EGLDriver *drv, _EGLDisplay *disp, _EGLSurface *surf)
    return EGL_TRUE;
 }
 
-static void
-surface_callback(MirSurface *surface, void *ctx)
-{
-   struct dri2_egl_surface *dri2_surf = dri2_egl_surface(ctx);
-
-}
-
 /**
  * Called via eglSwapBuffers(), drv->API.SwapBuffers().
  */
@@ -256,8 +249,6 @@ dri2_swap_buffers(_EGLDriver *drv, _EGLDisplay *disp, _EGLSurface *draw)
    struct dri2_egl_driver *dri2_drv = dri2_egl_driver(drv);
 
    dri2_surf->mir_disp->surface_advance_buffer(dri2_surf->mir_disp, (EGLNativeWindowType)dri2_surf->mir_surf);
-
-   (*dri2_dpy->flush->flush)(dri2_surf->dri_drawable);
 
    (*dri2_dpy->flush->flush)(dri2_surf->dri_drawable);
 
