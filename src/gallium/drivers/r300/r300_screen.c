@@ -28,6 +28,8 @@
 #include "vl/vl_decoder.h"
 #include "vl/vl_video_buffer.h"
 
+#include <drm.h>
+
 #include "r300_context.h"
 #include "r300_texture.h"
 #include "r300_screen_buffer.h"
@@ -192,6 +194,11 @@ static int r300_get_param(struct pipe_screen* pscreen, enum pipe_cap param)
         /* Render targets. */
         case PIPE_CAP_MAX_RENDER_TARGETS:
             return 4;
+
+        /* PRIME import/export support */
+        case PIPE_CAP_PRIME:
+            return r300screen->info.prime_caps &
+                   (DRM_PRIME_CAP_IMPORT | DRM_PRIME_CAP_EXPORT);
     }
     return 0;
 }

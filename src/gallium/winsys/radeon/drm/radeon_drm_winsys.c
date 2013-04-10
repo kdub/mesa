@@ -341,6 +341,10 @@ static boolean do_winsys_init(struct radeon_drm_winsys *ws)
             ws->info.has_uvd = value;
     }
 
+    /* Check for PRIME */
+    ws->info.prime_caps = 0;
+    drmGetCap(ws->fd, DRM_CAP_PRIME, &ws->info.prime_caps);
+
     /* Get GEM info. */
     retval = drmCommandWriteRead(ws->fd, DRM_RADEON_GEM_INFO,
             &gem_info, sizeof(gem_info));

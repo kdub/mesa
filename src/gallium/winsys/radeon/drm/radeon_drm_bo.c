@@ -376,7 +376,6 @@ static void radeon_bo_destroy(struct pb_buffer *_buf)
     pipe_mutex_lock(bo->mgr->bo_handles_mutex);
     util_hash_table_remove(bo->mgr->bo_handles, (void*)(uintptr_t)bo->handle);
     if (bo->name) {
-        pipe_mutex_lock(bo->mgr->bo_handles_mutex);
         util_hash_table_remove(bo->mgr->bo_names,
                                (void*)(uintptr_t)bo->name);
     }

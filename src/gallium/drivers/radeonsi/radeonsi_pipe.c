@@ -20,6 +20,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+#include <drm.h>
 #include <stdio.h>
 #include <errno.h>
 #include "pipe/p_defines.h"
@@ -427,6 +428,9 @@ static int r600_get_param(struct pipe_screen* pscreen, enum pipe_cap param)
 
 	case PIPE_CAP_MAX_TEXEL_OFFSET:
 		return 7;
+	case PIPE_CAP_PRIME:
+		return rscreen->info.prime_caps &
+			(DRM_PRIME_CAP_IMPORT | DRM_PRIME_CAP_EXPORT);
 	}
 	return 0;
 }
