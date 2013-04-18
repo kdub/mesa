@@ -918,6 +918,12 @@ dri2_init_screen(__DRIscreen * sPriv)
       screen->default_throttle_frames = throttle_ret->val.val_int;
    }
 
+   if (pscreen->get_param(pscreen, PIPE_CAP_PRIME)) {
+      dri2ImageExtension.base.version = 7;
+      dri2ImageExtension.createImageFromTexture = dri2_create_from_texture;
+      dri2ImageExtension.createImageFromFds = dri2_from_fds;
+   }
+
    sPriv->extensions = dri_screen_extensions;
 
    /* dri_init_screen_helper checks pscreen for us */
