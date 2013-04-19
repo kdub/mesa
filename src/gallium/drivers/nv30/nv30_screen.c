@@ -31,6 +31,8 @@
 #include "nv30-40_3d.xml.h"
 #include "nv01_2d.xml.h"
 
+#include <drm.h>
+
 #include "nouveau/nouveau_fence.h"
 #include "nv30_screen.h"
 #include "nv30_context.h"
@@ -132,6 +134,9 @@ nv30_screen_get_param(struct pipe_screen *pscreen, enum pipe_cap param)
    case PIPE_CAP_VERTEX_ELEMENT_SRC_OFFSET_4BYTE_ALIGNED_ONLY:
    case PIPE_CAP_PREFER_BLIT_BASED_TEXTURE_TRANSFER:
       return 1;
+   case PIPE_CAP_PRIME:
+      return screen->base.prime_caps &
+         (DRM_PRIME_CAP_EXPORT | DRM_PRIME_CAP_IMPORT);
    default:
       debug_printf("unknown param %d\n", param);
       return 0;

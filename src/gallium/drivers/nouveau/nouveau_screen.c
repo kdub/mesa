@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
+#include <xf86drm.h>
 #include <libdrm/nouveau_drm.h>
 
 #include "nouveau_winsys.h"
@@ -123,7 +124,7 @@ nouveau_screen_bo_get_handle(struct pipe_screen *pscreen,
 		whandle->handle = bo->handle;
 		return TRUE;
 	} else if (whandle->type == DRM_API_HANDLE_TYPE_FD) {
-		return nouveau_bo_set_prime(bo, &whandle->handle) == 0;
+		return nouveau_bo_set_prime(bo, (int *)&whandle->handle) == 0;
 	} else {
 		return FALSE;
 	}
@@ -174,6 +175,9 @@ nouveau_screen_init(struct nouveau_screen *screen, struct nouveau_device *dev)
         if (!ret)
            screen->cpu_gpu_time_delta = time - screen->cpu_gpu_time_delta * 1000;
 
+	screen->prime_caps = 0;
+	ret = drmGetCap(dev->fd, DRM_CAP_PRIME, &screen->prime_caps);
+	
 	pscreen->get_name = nouveau_screen_get_name;
 	pscreen->get_vendor = nouveau_screen_get_vendor;
 

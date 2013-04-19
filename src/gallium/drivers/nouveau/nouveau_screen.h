@@ -47,6 +47,8 @@ struct nouveau_screen {
 
 	int64_t cpu_gpu_time_delta;
 
+	uint64_t prime_caps;
+
 	boolean hint_buf_keep_sysmem_copy;
 
 #ifdef NOUVEAU_ENABLE_DRIVER_STATISTICS

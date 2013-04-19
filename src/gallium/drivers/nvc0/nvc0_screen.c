@@ -24,6 +24,8 @@
 #include "util/u_format_s3tc.h"
 #include "pipe/p_screen.h"
 
+#include <drm.h>
+
 #include "vl/vl_decoder.h"
 #include "vl/vl_video_buffer.h"
 
@@ -181,7 +183,8 @@ nvc0_screen_get_param(struct pipe_screen *pscreen, enum pipe_cap param)
    case PIPE_CAP_TEXTURE_BORDER_COLOR_QUIRK:
       return PIPE_QUIRK_TEXTURE_BORDER_COLOR_SWIZZLE_NV50;
    case PIPE_CAP_PRIME:
-      return 0;
+      return nouveau_screen(pscreen)->prime_caps &
+         (DRM_PRIME_CAP_EXPORT | DRM_PRIME_CAP_IMPORT);
    default:
       NOUVEAU_ERR("unknown PIPE_CAP %d\n", param);
       return 0;
