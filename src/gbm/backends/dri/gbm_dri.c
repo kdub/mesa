@@ -536,7 +536,7 @@ create_dumb(struct gbm_device *gbm,
    if (bo->map == MAP_FAILED)
       goto destroy_dumb;
 
-   /* Should be gated on GBM_BO_USE_RENDERING, once Mir passes that down */
+   if (usage & GBM_BO_USE_RENDERING)
    {
       struct drm_gem_flink flink_arg;
       memset(&flink_arg, 0, sizeof(flink_arg));
