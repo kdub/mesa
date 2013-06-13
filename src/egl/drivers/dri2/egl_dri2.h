@@ -219,9 +219,7 @@ struct dri2_egl_surface
 #endif
 
 #ifdef HAVE_MIR_PLATFORM
-   MirSurface            *mir_surf;
-   // TODO: Awkward to copy
-   MirMesaEGLNativeDisplay *mir_disp;
+   MirMesaEGLNativeSurface *mir_surf;
 #endif
 };
 
